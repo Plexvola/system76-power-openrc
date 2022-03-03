@@ -16,6 +16,7 @@ pub const REQUIRES_NVIDIA: &[&str] = &[
     "gaze16-3050",
     "gaze16-3060",
     "gaze16-3060-b",
+    "gaze17",
     "kudu6",
     "oryp4",
     "oryp4-b",
@@ -236,6 +237,19 @@ impl HotPlugDetect {
                     pins:     [
                         0x02, // Mini DisplayPort
                         0x04, // USB-C
+                        0x00, // Not Connected
+                        0x00, // Not Connected
+                    ],
+                }),
+            }),
+            "gaze17" => Ok(Self {
+                integrated: Integrated::Intel(Intel {
+                    sideband: Sideband::new(PCR_BASE_ADDRESS)
+                        .map_err(HotPlugDetectError::Sideband)?,
+                    port:     0x6E,
+                    pins:     [
+                        0x72, // Mini DisplayPort
+                        0x78, // HDMI
                         0x00, // Not Connected
                         0x00, // Not Connected
                     ],
