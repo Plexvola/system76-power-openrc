@@ -23,6 +23,7 @@ pub const REQUIRES_NVIDIA: &[&str] = &[
     "oryp6",
     "oryp7",
     "oryp8",
+    "oryp9",
 ];
 
 #[derive(Debug, thiserror::Error)]
@@ -285,6 +286,19 @@ impl HotPlugDetect {
                         0x02, // Mini DisplayPort
                         0x04, // HDMI
                         0x06, // USB-C
+                        0x00, // Not Connected
+                    ],
+                }),
+            }),
+            "oryp9" => Ok(Self {
+                integrated: Integrated::Intel(Intel {
+                    sideband: Sideband::new(PCR_BASE_ADDRESS)
+                        .map_err(HotPlugDetectError::Sideband)?,
+                    port:     0x6E,
+                    pins:     [
+                        0x72, // Mini DisplayPort
+                        0x78, // HDMI
+                        0x7C, // USB-C
                         0x00, // Not Connected
                     ],
                 }),
