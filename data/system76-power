@@ -1,0 +1,12 @@
+#!/sbin/openrc-run
+command=/usr/bin/system76-power
+command_args="daemon"
+pidfile=/var/run/system76-power.pid
+name="System76 Power Daemon"
+start_stop_daemon_args="-b -m -p ${pidfile}"
+
+description="system76-power is a utility for managing graphics and power profiles."
+
+depend() {
+	need dbus
+}
