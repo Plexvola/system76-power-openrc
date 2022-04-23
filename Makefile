@@ -37,7 +37,7 @@ install: all
 	install -D -m 0644 "data/$(ID).service" "$(DESTDIR)$(libdir)/systemd/system/$(ID).service"
 	install -D -m 0644 "data/$(ID).xml" "$(DESTDIR)$(datadir)/dbus-1/interfaces/$(ID).xml"
 	install -D -m 0755 "target/release/$(BIN)" "$(DESTDIR)$(bindir)/$(BIN)"
-	install -D -m 0755 "data/system76-power" $(DESTDIR)/etc/init.d/system76-power
+	install -D -m 0755 "data/system76-power" "$(DESTDIR)/etc/init.d/system76-power"
 
 uninstall:
 	rm -f "$(DESTDIR)$(bindir)/$(ID)"
@@ -45,6 +45,7 @@ uninstall:
 	rm -f "$(DESTDIR)$(datadir)/dbus-1/system.d/$(ID).conf"
 	rm -f "$(DESTDIR)$(datadir)/polkit-1/actions/$(ID).policy"
 	rm -f "$(DESTDIR)$(libdir)/systemd/system/$(ID).service"
+	rm -f "$(DESTDIR)/etc/init.d/system76-power"
 
 update:
 	cargo update
