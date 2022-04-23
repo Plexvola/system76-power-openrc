@@ -243,9 +243,9 @@ impl ModelProfile {
 
     pub fn set(&self) -> Result<(), ModelError> {
         // Thermald sets pl1 and pl2 on its own, conflicting with system76-power
-        let _status = Command::new("systemctl")
+        let _status = Command::new("rc-service")
+            .arg("thermald")
             .arg("stop")
-            .arg("thermald.service")
             .status()
             .map_err(ModelError::Thermald)?;
         // TODO: check status, allow thermald to be missing

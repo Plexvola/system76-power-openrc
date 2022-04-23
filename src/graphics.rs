@@ -433,34 +433,34 @@ impl Graphics {
             }
         }
 
-        const SYSTEMCTL_CMD: &str = "systemctl";
+        const SYSTEMCTL_CMD: &str = "rc-service";
 
         let action = if vendor == GraphicsMode::Discrete {
-            log::info!("Enabling nvidia-fallback.service");
-            "enable"
+            log::info!("Enabling nvidia-fallback");
+            "start"
         } else {
-            log::info!("Disabling nvidia-fallback.service");
-            "disable"
+            log::info!("Disabling nvidia-fallback");
+            "stop"
         };
 
         let status = process::Command::new(SYSTEMCTL_CMD)
+            .arg("nvidia-fallback")
             .arg(action)
-            .arg("nvidia-fallback.service")
             .status()
             .map_err(|why| GraphicsDeviceError::Command { cmd: SYSTEMCTL_CMD, why })?;
 
         if !status.success() {
             // Error is ignored in case this service is removed
             log::warn!(
-                "systemctl: failed with {} (not an error if service does not exist!)",
+                "rc-service: failed with {} (not an error if service does not exist!)",
                 status
             );
         }
 
         log::info!("Updating initramfs");
-        const UPDATE_INITRAMFS_CMD: &str = "update-initramfs";
+        const UPDATE_INITRAMFS_CMD: &str = "genkernel"; // gentoo specific
         let status = process::Command::new(UPDATE_INITRAMFS_CMD)
-            .arg("-u")
+            .arg("initramfs")
             .status()
             .map_err(|why| GraphicsDeviceError::Command { cmd: UPDATE_INITRAMFS_CMD, why })?;
 
