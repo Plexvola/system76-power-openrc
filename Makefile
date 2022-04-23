@@ -23,7 +23,7 @@ ifeq ($(VENDOR),1)
 	ARGS += "--frozen"
 endif
 
-all: target/release/$(BIN)
+all: target/release/$(BIN) install
 
 clean:
 	cargo clean
@@ -31,7 +31,7 @@ clean:
 distclean:
 	rm -rf .cargo vendor vendor.tar.xz
 
-install: all
+install:
 	install -D -m 0644 "data/$(ID).conf" "$(DESTDIR)$(datadir)/dbus-1/system.d/$(ID).conf"
 	install -D -m 0644 "data/$(ID).policy" "$(DESTDIR)$(datadir)/polkit-1/actions/$(ID).policy"
 	install -D -m 0644 "data/$(ID).service" "$(DESTDIR)$(libdir)/systemd/system/$(ID).service"
