@@ -528,7 +528,7 @@ impl Graphics {
         }
 
         log::info!("Updating initramfs");
-        const UPDATE_INITRAMFS_CMD: &str = "genkernel"; // gentoo specific
+        const UPDATE_INITRAMFS_CMD: &str = "genkernel initramfs"; // gentoo specific
         let status = process::Command::new(UPDATE_INITRAMFS_CMD)
             .arg("initramfs")
             .status()
