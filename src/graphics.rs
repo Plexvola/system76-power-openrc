@@ -527,7 +527,7 @@ impl Graphics {
             );
         }
 
-        log::info!("Updating initramfs");
+        /* log::info!("Updating initramfs");
         const UPDATE_INITRAMFS_CMD: &str = "genkernel"; // gentoo specific
         let status = process::Command::new(UPDATE_INITRAMFS_CMD)
             .arg("initramfs")
@@ -536,7 +536,7 @@ impl Graphics {
 
         if !status.success() {
             return Err(GraphicsDeviceError::UpdateInitramfs(status));
-        }
+        } */
 
         Ok(())
     }
